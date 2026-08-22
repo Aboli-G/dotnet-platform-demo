@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="OilGas.Api.Tests/OilGas.Api.Tests.csproj" />
+  <Project Path="OilGas.Api/OilGas.Api.csproj" />
+</Solution>
