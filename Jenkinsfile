@@ -18,12 +18,12 @@ pipeline {
             }
         }
 
-        stage('Build') {
+         stage('Build') {
             steps {
-                echo 'Dot net solution Build started'
-                sh 'dotnet build OilGas.Platform.slnx --configuration Release --no-Restore'
-            }
-        }
+                 echo 'Building .NET solution'
+                 sh 'dotnet build OilGas.Platform.slnx --configuration Release --no-restore'
+             }  
+         } 
 
         stage('Test') {
             steps {
