@@ -43,6 +43,7 @@ pipeline {
         stage('Package Artifact') {
             steps {
                 echo 'Packaging published application'
+                sh 'rm -f OilGas.Api/publish.zip'
                 sh 'cd OilGas.Api/publish && zip -r ../publish.zip .'
             }
         }
