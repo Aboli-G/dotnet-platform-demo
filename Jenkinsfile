@@ -55,6 +55,28 @@ pipeline {
                 archiveArtifacts artifacts: 'OilGas.Api/publish/**, OilGas.Api/publish.zip', fingerprint: true
             }
         }
+
+        
+stage('Test Windows SSH from Jenkins') {
+    steps {
+        withCredentials([
+            sshUserPrivateKey(
+                credentialsId: 'windows-deploy-ssh',
+                keyFileVariable: 'SSH_KEY',
+                usernameVariable: 'SSH_USER'
+            )
+        ]) {
+            sh '''
+                set +x
+                ssh -i "$SSH_KEY" \
+                    -o StrictHostKeyChecking=accept-new \
+                    "$SSH_USER@10.0.1.141" \
+                    "hostname"
+            '''
+        }
+    }
+}
+
     }
 
     post {
