@@ -63,7 +63,7 @@ stage('Validate Jenkins SSH Key') {
     steps {
         withCredentials([
             sshUserPrivateKey(
-                credentialsId: 'windows-deploy-ssh',
+                credentialsId: 'windows-deploy-ssh-v2',,
                 keyFileVariable: 'SSH_KEY',
                 usernameVariable: 'SSH_USER'
             )
