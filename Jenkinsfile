@@ -57,6 +57,7 @@ pipeline {
         }
 
         
+
 stage('Test Windows SSH from Jenkins') {
     steps {
         withCredentials([
@@ -68,7 +69,13 @@ stage('Test Windows SSH from Jenkins') {
         ]) {
             sh '''
                 set +x
-                ssh -i "$SSH_KEY" \
+                echo "Testing SSH using Jenkins credential"
+                ssh -vv \
+                    -i "$SSH_KEY" \
+                    -o IdentitiesOnly=yes \
+                    -o PreferredAuthentications=publickey \
+                    -o PasswordAuthentication=no \
+                    -o BatchMode=yes \
                     -o StrictHostKeyChecking=accept-new \
                     "$SSH_USER@10.0.1.141" \
                     "hostname"
@@ -76,6 +83,7 @@ stage('Test Windows SSH from Jenkins') {
         }
     }
 }
+
 
     }
 
