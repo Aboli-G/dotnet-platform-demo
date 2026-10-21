@@ -59,7 +59,8 @@ pipeline {
         
 
 
-stage('Validate Jenkins SSH Key') {
+
+stage('Test Windows SSH from Jenkins') {
     steps {
         withCredentials([
             sshUserPrivateKey(
@@ -70,12 +71,17 @@ stage('Validate Jenkins SSH Key') {
         ]) {
             sh '''
                 set +x
-                echo "Validating Jenkins SSH private key"
-                ssh-keygen -y -f "$SSH_KEY" | ssh-keygen -lf -
+                ssh -i "$SSH_KEY" \
+                    -o IdentitiesOnly=yes \
+                    -o BatchMode=yes \
+                    -o StrictHostKeyChecking=accept-new \
+                    "$SSH_USER@10.0.1.141" \
+                    "hostname"
             '''
         }
     }
 }
+
 
 
 
