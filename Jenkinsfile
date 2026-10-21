@@ -60,7 +60,8 @@ pipeline {
 
 
 
-stage('Test Windows SSH from Jenkins') {
+
+stage('Transfer Artifact to Windows') {
     steps {
         withCredentials([
             sshUserPrivateKey(
@@ -71,16 +72,19 @@ stage('Test Windows SSH from Jenkins') {
         ]) {
             sh '''
                 set +x
-                ssh -i "$SSH_KEY" \
+                test -f OilGas.Api/publish.zip
+
+                scp -i "$SSH_KEY" \
                     -o IdentitiesOnly=yes \
                     -o BatchMode=yes \
                     -o StrictHostKeyChecking=accept-new \
-                    "$SSH_USER@10.0.1.141" \
-                    "hostname"
+                    OilGas.Api/publish.zip \
+                    "$SSH_USER@10.0.1.141:C:/Apps/OilGas-deploy/publish.zip"
             '''
         }
     }
 }
+
 
 
 
