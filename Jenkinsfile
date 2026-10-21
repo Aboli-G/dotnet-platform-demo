@@ -39,10 +39,19 @@ pipeline {
             }
         }
 
+        
+        stage('Package Artifact') {
+            steps {
+                echo 'Packaging published application'
+                sh 'tar -czf OilGas.Api/publish.zip -C OilGas.Api/publish .'
+            }
+        }
+
+
         stage('Archiving Artifacts') {
             steps {
                 echo 'Archiving deployment artifact'
-                archiveArtifacts artifacts: 'OilGas.Api/publish/**', fingerprint: true
+                archiveArtifacts artifacts: 'OilGas.Api/publish/**, OilGas.Api/publish.zip', fingerprint: true
             }
         }
     }
